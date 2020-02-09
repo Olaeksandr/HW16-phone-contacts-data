@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="./script.js" async></script>
+    </head>
+    <body>
+        <table id="contactsList">
+            <tr><th>Name</th><th>Surname</th><th>E-mail</th><th>Action</th></tr>
+            <tr class="contacts-item"><td>Oleksandr</td><td>Masiuk</td><td>Masiuk@gmail.com</td><td><button class="delete-btn">Delete</button></td></tr>
+        </table>
+
+        <form id="addContactsForm">
+            <tr><td> <input type="text" id="addContactName" class="input" placeholder="Name"/></td>
+                <td> <input type="text" id="addContactSurname" class="input" placeholder="Last Name"/></td>
+                <td> <input type="text" id="addContactEmail" class="input" placeholder="Example@gmail.com"/></td> 
+                <button id="addBtn" type="submit" class="button">Add Data</button>
+            </tr>   
+        </form>
+        <ul id='list' class="border">
+        </ul>
+        <template id="tdTemplate">
+            <tr class="contacts-item" data-id="{{id}}">
+             <td>{{name}}</td><td>{{surname}}</td><td>{{email}}</td><td><button class="delete-btn">Delete</button></td>
+            </tr>
+        </template>
+    </body>
+</html>

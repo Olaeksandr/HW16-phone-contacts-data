@@ -11,21 +11,23 @@
     <body>
         <table id="contactsList">
             <tr><th>Name</th><th>Surname</th><th>E-mail</th><th>Action</th></tr>
-            <tr class="contacts-item"><td>Oleksandr</td><td>Masiuk</td><td>Masiuk@gmail.com</td><td><button class="delete-btn">Delete</button></td></tr>
         </table>
 
         <form id="addContactsForm">
-            <tr><td> <input type="text" id="addContactName" class="input" placeholder="Name"/></td>
-                <td> <input type="text" id="addContactSurname" class="input" placeholder="Last Name"/></td>
-                <td> <input type="text" id="addContactEmail" class="input" placeholder="Example@gmail.com"/></td> 
-                <button id="addBtn" type="submit" class="button">Add Data</button>
+            <tr><td><input type="hidden" name="id" id="idInput" class="form-input"/>
+                <input type="text" name="name" id="addContactName" class="form-input" placeholder="Name"/></td>
+                <td> <input type="text" name="surname" id="addContactSurname" class="form-input" placeholder="Last Name"/></td>
+                <td> <input type="text" name="email" id="addContactEmail" class="form-input" placeholder="Example@gmail.com"/></td> 
+                <td></td><button id="addBtn" type="submit" class="button">Save</button></td>
             </tr>   
+            
         </form>
         <ul id='list' class="border">
         </ul>
         <template id="tdTemplate">
             <tr class="contacts-item" data-id="{{id}}">
-             <td>{{name}}</td><td>{{surname}}</td><td>{{email}}</td><td><button class="delete-btn">Delete</button></td>
+             <td>{{name}}</td><td>{{surname}}</td><td>{{email}}</td><td><button type="button" class="delete-btn">Delete</button>
+                <button type="button" class="edit-btn">Edit</button></td>
             </tr>
         </template>
     </body>

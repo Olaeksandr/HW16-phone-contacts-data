@@ -1,12 +1,15 @@
 "use strict";
 const CONTACTS_URL = 'http://5dd3d5ba8b5e080014dc4bfa.mockapi.io/users';
 const DELETE_BTN_CLASS = 'delete-btn';
+const EDIT_BTN_CLASS = 'edit-btn';
+
 
 const contactNameInput = document.getElementById('addContactName');
 const contactSurnameInput = document.getElementById('addContactSurname');
 const contactEmailInput = document.getElementById('addContactEmail');
 const contactsList = document.getElementById('contactsList');
 const rowContactTemplate = document.getElementById('tdTemplate').innerHTML;
+const formInputs = document.querySelectorAll('.form-input');
 
 let contacts = [];
 
@@ -33,6 +36,8 @@ function setContacts(data) {
 
 function renderContacts(data) {
     contactsList.innerHTML = data.map(generateContactHTML).join('\n');
+    // data.forEach(renderUser);
+   
 }
 
 function generateContactHTML(contact) {
@@ -46,7 +51,7 @@ function generateContactHTML(contact) {
 function onAddContactFormSubmit(event) {
     event.preventDefault();
     if(valitadionFormAddContact()) {
-        submitForm();
+        createUser();
     }
 }
 
@@ -57,9 +62,6 @@ function valitadionFormAddContact() {
         return true;
     }
 }
-
-
-
 
 function validationBlur(event) {
     switch(true) {
@@ -73,7 +75,7 @@ function validationBlur(event) {
 }
 
 
-function submitForm() {
+function createUser() {
     const contact = {
         name: contactNameInput.value, 
         surname: contactSurnameInput.value, 
@@ -102,6 +104,20 @@ function onRowContactList(e) {
         case e.target.classList.contains(DELETE_BTN_CLASS):
             deleteContact(e.target.parentNode.parentNode.dataset.id);
             break;
+        case e.target.classList.contains(EDIT_BTN_CLASS):
+            editContact(e.target.parentNode.parentNode.dataset.id);
+            break;
+    }
+}
+
+function editContact(id) {
+    const user = contacts.find(item => item.id === id);
+    fillForm(user);
+}
+
+function fillForm(user) {
+    for(let i=0; i<formInputs.length; i++) {
+        formInputs[i].value = user[formInputs[i].name];
     }
 }
 
@@ -118,3 +134,39 @@ function clear() {
     addContactSurname.value = '';
     addContactEmail.value = '';
 }
+
+function submitUser() {
+    const user = getFormData();
+    console.log(user);
+    if(user.id) {
+        updateUser(user);
+        
+
+    } else {
+        createUser(user);
+        console.log(user);
+    }
+    clear();
+}
+
+
+function getFormData() {
+    const obj = {};
+    for(let i=0; i<formInputs.length; i++) {
+        obj[formInputs[i].name] = formInputs[i].value;
+    }
+    return obj;
+}
+
+function updateUser(user) {
+    fetch(`${USERS_URL}/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    });
+    contacts = contacts.map(item => {item.id === user.id ? user : item});
+    renderContacts(contacts);
+}
+
